@@ -2,6 +2,7 @@ GEM
   remote: http://rubygems.org/
   specs:
     addressable (2.2.7)
+    builder (3.0.0)
     daemons (1.1.8)
     eventmachine (0.12.10)
     foreman (0.37.2)
@@ -40,6 +41,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  builder
   foreman
   haml
   heroku
