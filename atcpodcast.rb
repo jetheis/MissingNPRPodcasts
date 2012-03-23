@@ -15,17 +15,26 @@ $stdout.sync = true
 $num_records = ENV['ATC_STORY_COUNT'].to_i
 $num_records = 20 if $num_records == 0
 
-$hostname = 'localhost:5000'
-
 # NPR API request
 $request_url = "http://api.npr.org/query?id=2&fields=all&dateType=story&output=JSON&numResults=#{$num_records}&apiKey=#{ENV['NPR_API_KEY']}"
 puts $request_url
 
 get '/' do
+    @hostname = request.host
+    if request.port != 80
+        @hostname << ":#{request.port}"
+    end
+
     haml :index
 end
 
 get '/podcast' do
+    # Figure out the hostname
+    hostname = request.host
+    if request.port != 80
+        hostname << ":#{request.port}"
+    end
+
     # Set the content type of the response
     content_type 'text/xml'
 
@@ -53,9 +62,9 @@ get '/podcast' do
             channel.itunes :author, 'NPR: National Public Radio' # assumed
             channel.itunes :summary, program_json['teaser']['$text']
             channel.description program_json ['teaser']['$text']
-            channel.itunes :image, {:href => "http://#{$hostname}/atc_logo_600.jpg"}
+            channel.itunes :image, {:href => "http://#{hostname}/atc_logo_600.jpg"}
             channel.image do |image|
-                image.url "http://#{$hostname}/atc_logo_75.jpg"
+                image.url "http://#{hostname}/atc_logo_75.jpg"
                 image.link program_json['link'][1]['$text']
                 image.title program_json['title']['$text']
             end
