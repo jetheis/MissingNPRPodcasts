@@ -13,7 +13,7 @@ require 'sinatra'
 $stdout.sync = true
 
 $num_records = ENV['ATC_STORY_COUNT'].to_i
-$num_records = 50 if $num_records == 0
+$num_records = 20 if $num_records == 0
 
 $hostname = 'localhost:5000'
 
