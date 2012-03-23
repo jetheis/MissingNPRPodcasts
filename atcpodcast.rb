@@ -53,7 +53,12 @@ get '/podcast' do
             channel.itunes :author, 'NPR: National Public Radio' # assumed
             channel.itunes :summary, program_json['teaser']['$text']
             channel.description program_json ['teaser']['$text']
-            channel.itunes :image, {:href => "http://#{$hostname}/atc_logo.png"}
+            channel.itunes :image, {:href => "http://#{$hostname}/atc_logo_600.jpg"}
+            channel.image do |image|
+                image.url "http://#{$hostname}/atc_logo_75.jpg"
+                image.link program_json['link'][1]['$text']
+                image.title program_json['title']['$text']
+            end
             channel.itunes :owner  do |owner|
                 owner.itunes :name, 'NPR: National Public Radio'
             end
