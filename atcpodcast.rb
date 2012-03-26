@@ -9,6 +9,14 @@ require 'json'
 require 'sinatra'
 
 
+class SafetyHash < Hash
+    def [](y)
+        result = super
+        return result.nil? ? '' : result 
+    end
+end
+
+
 # Flush log output immediately
 $stdout.sync = true
 
@@ -41,7 +49,7 @@ get '/podcast' do
     # Make web request and parse JSON response
     response = Net::HTTP.get_response(URI.parse($request_url))
     data = response.body
-    result_json = JSON.parse(data)
+    result_json = JSON.parse data, :object_class => SafetyHash
 
     # Traverse JSON to root object
     program_json = result_json['list']
