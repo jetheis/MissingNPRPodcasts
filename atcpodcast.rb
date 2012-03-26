@@ -115,6 +115,7 @@ get '/podcast' do
                     story.itunes :subtitle, story_json['miniTeaser']['$text'].gsub(%r{</?[^>]+?>}, '')
                     story.itunes :summary, story_json['teaser']['$text'].gsub(%r{</?[^>]+?>}, '')
                     story.itunes :explicit, 'no' # assumed
+                    story.itunes :image, {:href => "http://#{hostname}/atc_logo_600.jpg"}
                     story.enclosure :url => audio_url, :type => 'audio/mpeg'
                     story.itunes :duration, story_json['audio'][0]['duration']['$text']
                     story.pubDate story_json['pubDate']['$text']
