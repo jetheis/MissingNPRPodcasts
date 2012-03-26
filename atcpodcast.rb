@@ -24,7 +24,7 @@ $num_records = ENV['ATC_STORY_COUNT'].to_i
 $num_records = 20 if $num_records == 0
 
 # NPR API request
-$request_url = "http://api.npr.org/query?id=2&fields=all&dateType=story&output=JSON&numResults=#{$num_records}&apiKey=#{ENV['NPR_API_KEY']}"
+$request_url = "http://api.npr.org/query?id=2&fields=all&dateType=story&endDate=2012-03-22&output=JSON&numResults=#{$num_records}&apiKey=#{ENV['NPR_API_KEY']}"
 puts $request_url
 
 get '/' do
@@ -121,10 +121,10 @@ get '/podcast' do
                     story.pubDate story_json['pubDate']['$text']
                     story.itunes :keywords
 
-                    # Optional thumbnail image
-                    if story_json.has_key? 'thumbnail' and story_json['thumbnail'].has_key? 'large'
-                        story.itunes :image, {:href => story_json['thumbnail']['large']['$text']}
-                    end
+                    ## Optional thumbnail image
+                    #if story_json.has_key? 'thumbnail' and story_json['thumbnail'].has_key? 'large'
+                    #    story.itunes :image, {:href => story_json['thumbnail']['large']['$text']}
+                    #end
 
                     # Construct author list before writing it (if there are authors)
                     if story_json.has_key? 'byline'
