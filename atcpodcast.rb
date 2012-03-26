@@ -24,9 +24,13 @@ $num_records = ENV['ATC_STORY_COUNT'].to_i
 $num_records = 20 if $num_records == 0
 
 # NPR API request
-#$request_url = "http://api.npr.org/query?id=2&fields=all&dateType=story&endDate=2012-03-22&output=JSON&numResults=#{$num_records}&apiKey=#{ENV['NPR_API_KEY']}"
-$request_url = "http://api.npr.org/query?id=2&fields=all&dateType=story&output=JSON&numResults=#{$num_records}&apiKey=#{ENV['NPR_API_KEY']}"
-puts $request_url
+request_args = URI.encode_www_form :id => 2,
+                                   :fields => 'all',
+                                   :dataType => 'story',
+                                   :output => 'JSON',
+                                   :numResults => $num_records,
+                                   :apiKey => ENV['NPR_API_KEY']
+$request_url = "http://api.npr.org/query?#{request_args}"
 
 get '/' do
     @hostname = request.host
@@ -65,12 +69,12 @@ get '/podcast' do
             # Channel metadata
             channel.title program_json['title']['$text']
             channel.link program_json['link'][1]['$text']
+            channel.description program_json ['teaser']['$text']
             channel.language 'en' # assumed
             channel.copyright 'Copyright 2012 NPR - For Personal Use Only' # assumed
             channel.itunes :subtitle, program_json['miniTeaser']['$text']
             channel.itunes :author, 'NPR: National Public Radio' # assumed
             channel.itunes :summary, program_json['teaser']['$text']
-            channel.description program_json ['teaser']['$text']
             channel.itunes :image, {:href => "http://#{hostname}/atc_logo_600.jpg"}
             channel.image do |image|
                 image.url "http://#{hostname}/atc_logo_75.jpg"
