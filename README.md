@@ -1,26 +1,26 @@
-# All Things Considered Unofficial Podcast
+# (Unofficial) Missing NPR Podcasts
 
-This project includes a simple Sinatra web app that consumes the NPR API for the
-All Things Considered program and reorganizes it into a podcast format. As
-stated many times thorughout this document, and throughout the NPR API Terms of
-Use, this software and its output are **for personal use only**. I am in no way
-affiliated with NPR or the All Things Considered program.
+This project includes a simple Sinatra web app that consumes the NPR API for
+the Morning Edition and All Things Considered radio news programs and
+reorganizes it into a podcast format. As stated many times thorughout this
+document, and throughout the NPR API Terms of Use, this software and its output
+are **for personal use only**. I am in no way affiliated with NPR or the All
+Things Considered program.
 
 Please read TODO before using this software.
 
 ## Disclaimer
 
 This is not an official podcast! NPR makes a good portion of its money from
-licensing programs like All Things Considered to member stations. Do not let the
-existance of this code prevent you from both listening to All Things Considered
-from your local NPR member station and contributing to that station.
+licensing programs like Morning Edition and All Things Considered to member
+stations. Do not let the existance of this code prevent you from both listening
+to these programs from your local NPR member station and contributing to that
+station.
 
 If you don't have a "home" NPR member station, feel free to donate to mine:
 
 * [WFYI (Indianapolis)](https://www.wfyi.org/pledgeNew/pledgeForm.php)
 * [WFIU (Bloomington, Terre Haute)](http://indianapublicmedia.org/support/radio/)
-
-Make sure you note the All Things Considered program in your donation.
 
 ## Acceptable Use
 
@@ -35,9 +35,12 @@ of the software the responsibility of the registered API key holder.
 ## License
 
 All media content is property of
-[NPR: National Public Radio](https://www.npr.org/). Information about the
-licensing of the All Things Considered program can be found on the program's
-[web page](https://www.npr.org/programs/all-things-considered/)
+[NPR: National Public Radio](https://www.npr.org/).
+
+Information about the licensing of the programs can be found on the
+[Morning Edition weg page](http://www.npr.org/programs/morning-edition/), as well
+as the
+[All Things Considered web page](https://www.npr.org/programs/all-things-considered/).
 
 The source code contained in this project is released under the MIT License:
 

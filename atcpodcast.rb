@@ -66,6 +66,7 @@ get '/podcast' do
     # Construct the feed
     xml.rss :version => '2.0', 'xmlns:itunes' => 'http://www.itunes.com/dtds/podcast-1.0.dtd' do
         xml.channel do |channel|
+
             # Channel metadata
             channel.title program_json['title']['$text']
             channel.link program_json['link'][1]['$text']
