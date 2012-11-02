@@ -17,7 +17,19 @@ class Podcast
     BASE_URL = 'http://api.npr.org/query?'
     DEFAULT_STORY_COUNT = 10
 
-    def self.test_api_key apk_key
+    def self.test_api_key api_key
+            request_args = URI.encode_www_form :id => 1,
+                                               :fields => 'all',
+                                               :dataType => 'story',
+                                               :output => 'JSON',
+                                               :numResults => 1,
+                                               :apiKey => api_key
+
+            request_url = "#{BASE_URL}#{request_args}"
+            response = Net::HTTP.get_response(URI.parse(request_url))
+            json = JSON.parse response.body, :object_class => SafetyHash
+
+            return JSON.generate({ :validKey => json.key?('list') })
     end
 
     def initialize(args = {})

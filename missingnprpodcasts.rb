@@ -15,6 +15,8 @@ end
 
 get '/testapikey' do
     api_key = params[:apikey]
+
+    content_type 'text/json'
     Podcast.test_api_key api_key
 end
 
