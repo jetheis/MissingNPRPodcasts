@@ -22,6 +22,9 @@
 
         e.preventDefault();
 
+        apiKeyCheckButton.attr('disabled', true);
+        apiKeyCheckButton.text('Validating...');
+
         var baseUrl = window.location.host + window.location.pathname,
             baseProtocol = window.location.protocol + '//',
             iTunesProtocol = 'itpc://',
@@ -48,7 +51,11 @@
                 allThingsConsideredRssButton.attr('href', allThingsConsideredRssUrl);
 
                 // Make the buttons visible
-                subscriptionsContainer.removeClass('hidden')
+                subscriptionsContainer.removeClass('hidden');
+
+                // Revert to original button text
+                apiKeyCheckButton.removeAttr('disabled');
+                apiKeyCheckButton.text('Validate API Key');
             }
 
         });

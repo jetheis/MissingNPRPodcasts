@@ -7,7 +7,7 @@ require 'sinatra'
 require './podcast'
 
 
-STORY_COUNT = 30
+STORY_COUNT = 20
 
 get '/' do
     haml :index
