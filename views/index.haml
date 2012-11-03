@@ -9,13 +9,23 @@
       %div.hero-unit
         %h1 (Unofficial) Missing NPR Podcasts
         %p Description
-    %h1 All Things Considered Unofficial Podcast
-    %p
-      This podcast is for the personal use of Jimmy Theis only.
-    %h2 If You Are Jimmy Theis
-    .subscribe-link
-      %a{:href => "itpc://#{@hostname}/podcast"}
-        Subscribe
+      %form.form-horizontal
+        %div.control-group
+          %label.control-label API Key:
+          %div.controls
+            %input.input-xxlarge#apiKeyField{:type => 'text'}
+            %button.btn.btn-primary#apiKeyCheckButton{:type => 'button'} Validate API Key
+        %div.subscriptions.hidden
+          %div.control-group
+            %label.control-label Morning Edition:
+            %div.controls
+              %a.btn.btn-success#morningEditionITunesButton Subscribe in iTunes
+              %a.btn.btn-warning#morningEditionRssButton Raw RSS
+          %div.control-group
+            %label.control-label All Things Considered:
+            %div.controls
+              %a.btn.btn-success#allThingsConsideredITunesButton Subscribe in iTunes
+              %a.btn.btn-warning#allThingsConsideredRssButton Raw RSS
     %script{:src => 'js/jquery-1.8.2.min.js'}
     %script{:src => 'js/bootstrap.min.js'}
     %script{:src => 'js/site.js'}
