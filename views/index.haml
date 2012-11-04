@@ -4,20 +4,20 @@
     %title Missing NPR Podcasts (Unofficial)
     %meta{:charset => 'utf-8'}
     %meta{:name => 'author', :content => 'Jimmy Theis'}
-    %meta{:name => 'description', :content => 'Miss having Morning Edition and All Things Considered Podcasts? Miss no more...'}
+    %meta{:name => 'description', :content => 'Miss having Morning Edition and All Things Considered Podcasts? Miss no more.'}
     %meta{:property => 'og:locale', :content => 'en_us'}
     %meta{:property => 'og:title', :content => 'Missing NPR Podcasts (Unofficial)'}
-    %meta{:property => 'og:description', :content => 'Missing NPR Podcasts (Unofficial)'}
+    %meta{:property => 'og:description', :content => 'Miss having Morning Edition and All Things Considered Podcasts? Miss no more.'}
     %meta{:property => 'og:site_name', :content => 'Missing NPR Podcasts (Unofficial)'}
-    %meta{:property => 'og:url', :content => 'Missing NPR Podcasts (Unofficial)'}
-    %meta{:property => 'og:image', :content => 'Missing NPR Podcasts (Unofficial)'}
-    %link{:rel => 'canonical', :href => 'http://missingnprpodcasts.com'}
-    %link{:rel => 'image_src', :href => 'img/thumbnail.png'}
-    %link{:rel => 'stylesheet', :href => '//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap.no-responsive.no-icons.min.css', :type => 'text/css'}
+    %meta{:property => 'og:url', :content => "#{@base_url}"}
+    %meta{:property => 'og:image', :content => "#{@base_url}/img/thumbnail.png"}
+    %link{:rel => 'canonical', :href => "#{@base_url}"}
+    %link{:rel => 'image_src', :href => "#{@base_url}/img/thumbnail.png"}
+    %link{:rel => 'stylesheet', :href => 'http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap.no-responsive.no-icons.min.css', :type => 'text/css'}
     %link{:rel => 'stylesheet', :href => 'css/site.css', :type => 'text/css'}
   %body
     %a.ribbon{:href => 'https://github.com/jetheis/MissingNPRPodcasts'}
-      %img{:src => 'https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png', :alt => 'Fork me on GitHub'}
+      %img{:src => 'http://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png', :alt => 'Fork me on GitHub'}
     %div.container
       %div.hero-unit
         %h1 Missing NPR Podcasts (Unofficial)
@@ -40,5 +40,5 @@
               %a.btn.btn-success#allThingsConsideredITunesButton Subscribe in iTunes
               %a.btn.btn-warning#allThingsConsideredRssButton Raw RSS
     %script{:src => 'http://code.jquery.com/jquery-1.8.2.min.js'}
-    %script{:src => '//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js'}
+    %script{:src => 'http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js'}
     %script{:src => 'js/site.js'}

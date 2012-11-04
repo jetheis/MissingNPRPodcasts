@@ -10,6 +10,7 @@ require './podcast'
 STORY_COUNT = 20
 
 get '/' do
+    @base_url = request.base_url
     haml :index
 end
 
