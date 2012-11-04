@@ -133,11 +133,6 @@ class Podcast
             story.pubDate story_json['pubDate']['$text']
             story.itunes :keywords
 
-            ## Optional thumbnail image
-            #if story_json.has_key? 'thumbnail' and story_json['thumbnail'].has_key? 'large'
-            #    story.itunes :image, {:href => story_json['thumbnail']['large']['$text']}
-            #end
-
             # Construct author list before writing it (if there are authors)
             if story_json.has_key? 'byline'
                 authors = []
