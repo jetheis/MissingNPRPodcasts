@@ -10,7 +10,8 @@
     var subscriptionsContainer = $('.subscriptions');
 
     var apiKeyField = $('#apiKeyField'),
-        apiKeyCheckButton = $('#apiKeyCheckButton');
+        apiKeyCheckButton = $('#apiKeyCheckButton'),
+        apiForm = $('#apiForm');
 
     var morningEditionITunesButton = $('#morningEditionITunesButton'),
         morningEditionRssButton = $('#morningEditionRssButton');
@@ -18,12 +19,21 @@
     var allThingsConsideredITunesButton = $('#allThingsConsideredITunesButton'),
         allThingsConsideredRssButton = $('#allThingsConsideredRssButton');
 
-    apiKeyCheckButton.click(function(e) {
+    function disableValidateButton() {
+        apiKeyCheckButton.attr('disabled', true);
+        apiKeyCheckButton.text('Validating...');
+    }
+
+    function enableValidateButton() {
+        apiKeyCheckButton.removeAttr('disabled');
+        apiKeyCheckButton.text('Validate API Key');
+    }
+
+    function validate(e) {
 
         e.preventDefault();
 
-        apiKeyCheckButton.attr('disabled', true);
-        apiKeyCheckButton.text('Validating...');
+        disableValidateButton();
 
         var baseUrl = window.location.host + window.location.pathname,
             baseProtocol = window.location.protocol + '//',
@@ -54,11 +64,16 @@
                 subscriptionsContainer.removeClass('hidden');
 
                 // Revert to original button text
-                apiKeyCheckButton.removeAttr('disabled');
-                apiKeyCheckButton.text('Validate API Key');
+                enableValidateButton();
+
+            } else {
+                alert('The API key you entered does not appear to be valid. Please double check it and try again.');
+                enableValidateButton();
             }
-
         });
-    });
+    }
 
-} ());
+    apiKeyCheckButton.click(validate);
+    apiForm.submit(validate);
+
+}());
