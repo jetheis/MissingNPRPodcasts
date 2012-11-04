@@ -119,7 +119,6 @@ class Podcast
         story_json['link'].each { |link_json| story_url = link_json['$text'] if link_json['type'] == 'html' }
 
         # Skip if there isn't a link for this story
-        puts story_url
         return if story_url.empty?
 
         # Go find the actual audio URL (separate web request)
