@@ -35,7 +35,6 @@ class Podcast
     def initialize(args = {})
         @program_id = args[:program_id] or 2
         @api_key = args[:api_key]
-        @hostname = args[:hostname] or 'missingprpodcasts.com'
         @story_count = args[:story_count] or DEFAULT_STORY_COUNT
         @copyright = args[:copyright] or 'Copyright 2012 NPR - For Personal Use Only' 
         @author = args[:author] or 'NPR: National Public Radio'
@@ -88,16 +87,8 @@ class Podcast
         channel.itunes :subtitle, program_property('miniTeaser')
         channel.itunes :author, @author
         channel.itunes :summary, program_property('teaser')
-        channel.itunes :image, {:href => "http://#{@hostname}/atc_logo_600.jpg"}
         channel.itunes :owner do |owner|
             owner.itunes :name, 'NPR: National Public Radio'
-        end
-
-        # Images
-        channel.image do |image|
-            image.url "http://#{@hostname}/atc_logo_75.jpg"
-            image.title program_property('title')
-            image.link @program_json['link'][1]['$text'] if @program_json['link'] and @program_json['link'][1]
         end
 
         # Individual stories
@@ -137,7 +128,6 @@ class Podcast
             story.itunes :subtitle, story_json['miniTeaser']['$text'].gsub(%r{</?[^>]+?>}, '')
             story.itunes :summary, story_json['teaser']['$text'].gsub(%r{</?[^>]+?>}, '')
             story.itunes :explicit, 'no' # assumed
-            story.itunes :image, {:href => "http://#{@hostname}/atc_logo_600.jpg"}
             story.enclosure :url => audio_url, :type => 'audio/mpeg'
             story.itunes :duration, story_json['audio'][0]['duration']['$text']
             story.pubDate story_json['pubDate']['$text']
