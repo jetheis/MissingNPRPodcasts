@@ -13,6 +13,10 @@ Unminified file at <https://github.com/jetheis/MissingNPRPodcasts/blob/master/ap
     border: 0;
  }
 
+ input[type=text] {
+    width: 375px;
+ }
+
 .subscriptions {
     visibility: visible;
     opacity: 1;
