@@ -2,20 +2,31 @@
 %html
   %head
     %title The Missing NPR Podcasts
+
+    / General metadata
     %meta{:charset => 'utf-8'}
     %meta{:name => 'description', :content => 'Provides a podcast feed for the Morning Edition and All Things Considered NPR radio programs. Not affiliated with NPR in any way, for presonal use only.'}
+    %link{:rel => 'canonical', :href => "#{@base_url}"}
+
+    / Stuff for Facebook
     %meta{:property => 'og:locale', :content => 'en_us'}
     %meta{:property => 'og:title', :content => 'The Missing NPR Podcasts'}
     %meta{:property => 'og:description', :content => 'Provides a podcast feed for the Morning Edition and All Things Considered NPR radio programs. Not affiliated with NPR in any way, for presonal use only.'}
     %meta{:property => 'og:site_name', :content => 'The Missing NPR Podcasts'}
     %meta{:property => 'og:url', :content => "#{@base_url}"}
-    %link{:rel => 'canonical', :href => "#{@base_url}"}
+
+    / CSS
     %link{:rel => 'stylesheet', :href => 'http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap.no-responsive.no-icons.min.css', :type => 'text/css'}
     != css :app
   %body
+
+    / GitHub ribbon
     %a.ribbon{:href => 'https://github.com/jetheis/MissingNPRPodcasts'}
       %img{:src => 'http://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png', :alt => 'Fork me on GitHub'}
+
     %div.container
+
+      / "Hero Unit" (big grey box)
       %div.hero-unit
 
         %h1 The Missing NPR Podcasts
@@ -35,6 +46,8 @@
             API into a format iTunes can understand. **In case it's not already
             obvious, this site is a personal project that is not affiliated with
             NPR in any way.**
+
+      / Text below the hero unit
       %p
         :markdown
           Because this website essentially circumvents NPR's business decision
@@ -69,22 +82,32 @@
           noncommercial, etc.).
 
       %form.form-horizontal#apiForm
+
+        / API key field
         %div.control-group
           %label.control-label API Key:
           %div.controls
             %input#apiKeyField{:type => 'text', :spellcheck => 'false'}
             %button.btn.btn-primary#apiKeyCheckButton{:type => 'button'} Validate API Key
+
+        / Hidden until after validation
         %div.subscriptions.hidden
+
+          / Morning Edition links
           %div.control-group
             %label.control-label Morning Edition:
             %div.controls
               %a.btn.btn-success#morningEditionITunesButton Subscribe in iTunes
               %a.btn.btn-warning#morningEditionRssButton Raw RSS
+
+          / All Things Considered links
           %div.control-group
             %label.control-label All Things Considered:
             %div.controls
               %a.btn.btn-success#allThingsConsideredITunesButton Subscribe in iTunes
               %a.btn.btn-warning#allThingsConsideredRssButton Raw RSS
+
+    / JavaScript
     %script{:src => 'http://code.jquery.com/jquery-1.8.2.min.js'}
     %script{:src => 'http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js'}
     != js :app
