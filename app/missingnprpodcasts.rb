@@ -8,7 +8,7 @@ require 'sinatra/assetpack'
 require './app/podcast'
 
 
-STORY_COUNT = 20
+STORY_COUNT = 25
 
 set :root, File.dirname(__FILE__)
 
