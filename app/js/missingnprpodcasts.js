@@ -64,6 +64,10 @@
                 // Make the buttons visible
                 subscriptionsContainer.removeClass('hidden');
 
+                // Make sure we're scrolled to the bottom
+                var body = $('body')[0];
+                body.scrollTop = body.scrollHeight;
+
                 // Revert to original button text
                 enableValidateButton();
 
