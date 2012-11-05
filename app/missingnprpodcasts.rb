@@ -3,11 +3,24 @@ require 'bundler/setup'
 
 require 'haml'
 require 'sinatra'
+require 'sinatra/assetpack'
 
-require './podcast'
+require './app/podcast'
 
 
 STORY_COUNT = 20
+
+set :root, File.dirname(__FILE__)
+
+assets {
+    serve '/js', from: 'js'
+    serve '/css', from: 'css'
+
+    js :app, '/js/app.js', ['/js/missingnprpodcasts.js']
+    css :app, '/css/app.css', ['/css/missingnprpodcasts.css']
+
+    js_compression :uglify, { :toplevel => true }
+}
 
 get '/' do
     @base_url = request.base_url

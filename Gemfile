@@ -2,6 +2,7 @@ source "http://rubygems.org"
 
 gem 'builder'
 gem 'haml'
-gem 'heroku', :group => :development
-gem 'thin'
 gem 'sinatra'
+gem 'sinatra-assetpack', :require => 'sinatra/assetpack'
+gem 'thin'
+gem 'uglifier'

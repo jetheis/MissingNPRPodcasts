@@ -1,4 +1,4 @@
-require './missingnprpodcasts'
+require './app/missingnprpodcasts'
 
 # Flush log output immediately
 $stdout.sync = true

@@ -1,0 +1,16 @@
+/* Missing NPR Podcasts. Copyright 2012 Jimmy Theis (MIT License). Unminified file at <> */
+
+ .container {
+    margin-top: 40px;
+ }
+
+ a.ribbon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: 0;
+ }
+
+.subscriptions.hidden {
+    display: none;
+}

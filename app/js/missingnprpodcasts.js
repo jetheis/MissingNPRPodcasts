@@ -1,7 +1,8 @@
 /**
- * Site-specific JavaScript for http://www.missingnprpodcasts.com
- * Copyright 2012 Jimmy Theis, released under the MIT License
- * <https://github.com/jetheis/MissingNPRPodcasts>
+ * Missing NPR Podcasts
+ * Copyright 2012 Jimmy Theis (MIT License)
+ *
+ * Unimified file at <>
  **/
 
 (function() {

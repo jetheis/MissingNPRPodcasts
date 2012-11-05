@@ -14,7 +14,7 @@
     %link{:rel => 'canonical', :href => "#{@base_url}"}
     %link{:rel => 'image_src', :href => "#{@base_url}/img/thumbnail.png"}
     %link{:rel => 'stylesheet', :href => 'http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap.no-responsive.no-icons.min.css', :type => 'text/css'}
-    %link{:rel => 'stylesheet', :href => 'css/site.css', :type => 'text/css'}
+    != css :app
   %body
     %a.ribbon{:href => 'https://github.com/jetheis/MissingNPRPodcasts'}
       %img{:src => 'http://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png', :alt => 'Fork me on GitHub'}
@@ -41,4 +41,4 @@
               %a.btn.btn-warning#allThingsConsideredRssButton Raw RSS
     %script{:src => 'http://code.jquery.com/jquery-1.8.2.min.js'}
     %script{:src => 'http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js'}
-    %script{:src => 'js/site.js'}
+    != js :app
