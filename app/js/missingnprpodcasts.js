@@ -2,7 +2,7 @@
  * Missing NPR Podcasts
  * Copyright 2012 Jimmy Theis (MIT License)
  *
- * Unimified file at <>
+ * Unimified file at <https://github.com/jetheis/MissingNPRPodcasts/blob/master/app/js/missingnprpodcasts.js>
  **/
 
 (function() {
