@@ -13,7 +13,7 @@
     $('a').not('.btn').attr('target', '_blank');
 
     var storage = window.localStorage,
-        storageKey = 'missingNprPodcastApiKey';
+        storageKey = 'missingNprPodcastsApiKey';
 
     var subscriptionsContainer = $('.subscriptions');
 
