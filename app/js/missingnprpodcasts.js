@@ -8,6 +8,10 @@
 (function() {
     'use strict';
 
+    // HAML sucks sometimes, so it's easier to just set the targets to all links
+    // with JavaScript (which should have no negative effect on things like scraping)
+    $('a').not('.btn').attr('target', '_blank');
+
     var subscriptionsContainer = $('.subscriptions');
 
     var apiKeyField = $('#apiKeyField'),
