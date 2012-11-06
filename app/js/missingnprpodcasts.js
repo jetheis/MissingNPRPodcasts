@@ -24,6 +24,19 @@
     var allThingsConsideredITunesButton = $('#allThingsConsideredITunesButton'),
         allThingsConsideredRssButton = $('#allThingsConsideredRssButton');
 
+    function attemptToRestoreKey() {
+        if (window.localStorage && window.localStorage['missingNprPodcastsApiKey']) {
+            apiKeyField.val(window.localStorage['missingNprPodcastsApiKey']);
+            apiKeyCheckButton.click();
+        }
+    }
+
+    function storeKey(key) {
+        if (window.localStorage) {
+            localStorage['missingNprPodcastsApiKey'] = key;
+        }
+    }
+
     function disableValidateButton() {
         apiKeyCheckButton.attr('disabled', true);
         apiKeyCheckButton.text('Validating...');
@@ -75,6 +88,9 @@
                 // Revert to original button text
                 enableValidateButton();
 
+                // Store the key for use next time
+                storeKey(apiKey);
+
             } else {
                 alert('The API key you entered does not appear to be valid. Please double check it and try again.');
                 enableValidateButton();
@@ -84,5 +100,8 @@
 
     apiKeyCheckButton.click(validate);
     apiForm.submit(validate);
+
+    // Restore an old key if one's available
+    attemptToRestoreKey();
 
 }());
