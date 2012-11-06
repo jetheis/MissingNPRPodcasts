@@ -12,6 +12,9 @@
     // with JavaScript (which should have no negative effect on things like scraping)
     $('a').not('.btn').attr('target', '_blank');
 
+    var storage = window.localStorage,
+        storageKey = 'missingNprPodcastApiKey';
+
     var subscriptionsContainer = $('.subscriptions');
 
     var apiKeyField = $('#apiKeyField'),
@@ -25,15 +28,15 @@
         allThingsConsideredRssButton = $('#allThingsConsideredRssButton');
 
     function attemptToRestoreKey() {
-        if (window.localStorage && window.localStorage['missingNprPodcastsApiKey']) {
-            apiKeyField.val(window.localStorage['missingNprPodcastsApiKey']);
+        if (storage && storage[storageKey]) {
+            apiKeyField.val(storage[storageKey]);
             apiKeyCheckButton.click();
         }
     }
 
     function storeKey(key) {
-        if (window.localStorage) {
-            localStorage['missingNprPodcastsApiKey'] = key;
+        if (storage) {
+            storage[storageKey] = key;
         }
     }
 
