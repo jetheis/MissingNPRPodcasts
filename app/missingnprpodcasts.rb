@@ -13,7 +13,9 @@ STORY_COUNT = 30
 
 set :root, File.dirname(__FILE__)
 
-use Rack::GoogleAnalytics, :tracker => 'UA-36111667-1'
+use Rack::GoogleAnalytics, :tracker => 'UA-36111667-1',
+                           :multiple => true,
+                           :domain => 'missingnprpodcasts.com'
 
 assets {
     serve '/js', from: 'js'
