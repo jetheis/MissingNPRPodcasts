@@ -2,6 +2,7 @@ require 'rubygems'
 require 'bundler/setup'
 
 require 'haml'
+require 'rack-google-analytics'
 require 'sinatra'
 require 'sinatra/assetpack'
 
@@ -11,6 +12,8 @@ require './app/podcast'
 STORY_COUNT = 30
 
 set :root, File.dirname(__FILE__)
+
+use Rack::GoogleAnalytics, :tracker => 'UA-36111667-1'
 
 assets {
     serve '/js', from: 'js'
