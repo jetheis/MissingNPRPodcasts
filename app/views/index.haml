@@ -7,6 +7,7 @@
     %meta{:charset => 'utf-8'}
     %meta{:name => 'description', :content => 'Provides a podcast feed for the Morning Edition and All Things Considered NPR radio programs. Not affiliated with NPR in any way, for presonal use only.'}
     %link{:rel => 'canonical', :href => "#{@base_url}"}
+    %link{:rel => 'icon', :href => '/images/favicon.png', :sizes => '512x512', :type => 'image/png'}
 
     / Stuff for Facebook
     %meta{:property => 'og:locale', :content => 'en_us'}
@@ -14,6 +15,7 @@
     %meta{:property => 'og:description', :content => 'Provides a podcast feed for the Morning Edition and All Things Considered NPR radio programs. Not affiliated with NPR in any way, for presonal use only.'}
     %meta{:property => 'og:site_name', :content => 'The Missing NPR Podcasts'}
     %meta{:property => 'og:url', :content => "#{@base_url}"}
+    %meta{:property => 'og:image', :content => "#{@base_url}/images/favicon.png"}
 
     / CSS
     %link{:rel => 'stylesheet', :href => 'http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap.no-responsive.no-icons.min.css', :type => 'text/css'}
