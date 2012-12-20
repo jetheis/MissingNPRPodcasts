@@ -13,3 +13,4 @@ test/version_tmp
 tmp
 .*.swp
 .DS_Store
+artwork/
