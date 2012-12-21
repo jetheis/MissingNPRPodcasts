@@ -27,6 +27,14 @@
     var allThingsConsideredITunesButton = $('#allThingsConsideredITunesButton'),
         allThingsConsideredRssButton = $('#allThingsConsideredRssButton');
 
+    function attachGoogleAnalyticsEvents() {
+        function clickHandler(action) { return function() { _gaq.push(['Subscription Button Click', action]); } }
+        morningEditionITunesButton.click(clickHandler('Morning Edition iTunes'));
+        morningEditionRssButton.click(clickHandler('Morning Edition RSS'));
+        allThingsConsideredITunesButton.click(clickHandler('All Things Considered iTunes'));
+        allThingsConsideredRssButton.click(clickHandler('All Things Considered RSS'));
+    }
+
     function attemptToRestoreKey() {
         if (storage && storage[storageKey]) {
             apiKeyField.val(storage[storageKey]);
@@ -100,6 +108,8 @@
             }
         });
     }
+
+    attachGoogleAnalyticsEvents();
 
     apiKeyCheckButton.click(validate);
     apiForm.submit(validate);
