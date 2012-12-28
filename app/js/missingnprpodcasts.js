@@ -28,15 +28,18 @@
         allThingsConsideredRssButton = $('#allThingsConsideredRssButton');
 
     function attachGoogleAnalyticsEvents() {
-        function clickHandler(action) { return function() { _gaq.push(['Subscription Button Click', action]); } }
-        morningEditionITunesButton.click(clickHandler('Morning Edition iTunes'));
-        morningEditionRssButton.click(clickHandler('Morning Edition RSS'));
-        allThingsConsideredITunesButton.click(clickHandler('All Things Considered iTunes'));
-        allThingsConsideredRssButton.click(clickHandler('All Things Considered RSS'));
+        function clickHandler(button) { return function() { _gaq.push(['_trackEvent', button, 'click']); }; }
+        morningEditionITunesButton.click(clickHandler('Morning Edition iTunes Button'));
+        morningEditionRssButton.click(clickHandler('Morning Edition RSS Button'));
+        allThingsConsideredITunesButton.click(clickHandler('All Things Considered iTunes Button'));
+        allThingsConsideredRssButton.click(clickHandler('All Things Considered RSS Button'));
+
+        apiKeyCheckButton.click(function() { _gaq.push(['_trackEvent', 'Validate API Key Button', 'click']); });
     }
 
     function attemptToRestoreKey() {
         if (storage && storage[storageKey]) {
+            _gaq.push(['_trackEvent', 'API Key', 'Restored']);
             apiKeyField.val(storage[storageKey]);
             apiKeyCheckButton.click();
         }
@@ -73,6 +76,8 @@
 
             if (data.hasOwnProperty('validKey') && data.validKey === true) {
 
+                _gaq.push(['_trackEvent', 'API Key', 'Validated']);
+
                 // Build URLs for the various buttons
                 var morningEditionBaseUrl = baseUrl + 'podcasts/morningedition?key=' + apiKey,
                     morningEditionITunesUrl = iTunesProtocol + morningEditionBaseUrl,
@@ -103,7 +108,10 @@
                 storeKey(apiKey);
 
             } else {
-                alert('The API key you entered does not appear to be valid. Please double check it and try again.');
+
+                _gaq.push(['_trackEvent', 'API Key', 'Failed to Validate']);
+
+                window.alert('The API key you entered does not appear to be valid. Please double check it and try again.');
                 enableValidateButton();
             }
         });
