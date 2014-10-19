@@ -29,6 +29,7 @@ assets {
 
 get '/' do
     @base_url = request.base_url
+    @scheme = request.scheme
     haml :index
 end
 
