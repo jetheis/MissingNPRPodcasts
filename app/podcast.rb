@@ -14,7 +14,7 @@ end
 
 class Podcast
 
-    BASE_URL = 'http://api.npr.org/query?'
+    BASE_URL = 'https://api.npr.org/query?'
     DEFAULT_STORY_COUNT = 10
 
     def self.test_api_key api_key
