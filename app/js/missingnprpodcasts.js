@@ -27,12 +27,20 @@
     var allThingsConsideredITunesButton = $('#allThingsConsideredITunesButton'),
         allThingsConsideredRssButton = $('#allThingsConsideredRssButton');
 
+    var weekendSundayITunesButton = $('#weekendSundayITunesButton'),
+        weekendSundayRssButton = $('#weekendSundayRssButton');
+
+    var weekendSaturdayITunesButton = $('#weekendSaturdayITunesButton'),
+        weekendSaturdayRssButton = $('#weekendSaturdayRssButton');
+
     function attachGoogleAnalyticsEvents() {
         function clickHandler(button) { return function() { _gaq.push(['_trackEvent', button, 'click']); }; }
         morningEditionITunesButton.click(clickHandler('Morning Edition iTunes Button'));
         morningEditionRssButton.click(clickHandler('Morning Edition RSS Button'));
         allThingsConsideredITunesButton.click(clickHandler('All Things Considered iTunes Button'));
         allThingsConsideredRssButton.click(clickHandler('All Things Considered RSS Button'));
+        weekendSundayITunesButton.click(clickHandler('All Things Considered iTunes Button'));
+        weekendSaturdayRssButton.click(clickHandler('All Things Considered RSS Button'));
 
         apiKeyCheckButton.click(function() { _gaq.push(['_trackEvent', 'Validate API Key Button', 'click']); });
     }
@@ -78,21 +86,21 @@
 
                 _gaq.push(['_trackEvent', 'API Key', 'Validated']);
 
-                // Build URLs for the various buttons
-                var morningEditionBaseUrl = baseUrl + 'podcasts/morningedition?key=' + apiKey,
-                    morningEditionITunesUrl = iTunesProtocol + morningEditionBaseUrl,
-                    morningEditionRssUrl = baseProtocol + morningEditionBaseUrl;
+                var binder = function(name, iTunesButton, rssButton) {
 
-                var allThingsConsideredBaseUrl = baseUrl + 'podcasts/allthingsconsidered?key=' + apiKey,
-                    allThingsConsideredITunesUrl = iTunesProtocol + allThingsConsideredBaseUrl,
-                    allThingsConsideredRssUrl = baseProtocol + allThingsConsideredBaseUrl;
+                    var commonUrl = baseUrl + 'podcasts/' + name + '?key=' + apiKey,
+                        iTunesUrl = iTunesProtocol + commonUrl,
+                        rssUrl = baseProtocol + commonUrl;
 
-                // Apply the new URLs
-                morningEditionITunesButton.attr('href', morningEditionITunesUrl);
-                morningEditionRssButton.attr('href', morningEditionRssUrl);
+                    // Apply the new URLs
+                    iTunesButton.attr('href', iTunesUrl);
+                    rssButton.attr('href', rssUrl);
+                }
 
-                allThingsConsideredITunesButton.attr('href', allThingsConsideredITunesUrl);
-                allThingsConsideredRssButton.attr('href', allThingsConsideredRssUrl);
+                binder('morningedition', morningEditionITunesButton, morningEditionRssButton);
+                binder('allthingsconsidered', allThingsConsideredITunesButton, allThingsConsideredRssButton);
+                binder('weekendsunday', weekendSundayITunesButton, weekendSundayRssButton);
+                binder('weekendsaturday', weekendSaturdayITunesButton, weekendSaturdayRssButton);
 
                 // Make the buttons visible
                 subscriptionsContainer.removeClass('hidden');
