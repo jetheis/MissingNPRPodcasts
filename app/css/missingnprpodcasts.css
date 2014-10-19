@@ -30,3 +30,11 @@ Unminified file at <https://github.com/jetheis/MissingNPRPodcasts/blob/master/ap
     visibility: hidden;
     opacity: 0;
 }
+
+.form-horizontal .control-label {
+    width: 180px;
+}
+
+.form-horizontal .controls {
+    margin-left: 200px;
+}
