@@ -14,7 +14,7 @@ end
 
 class Podcast
 
-    BASE_URL = 'http://api.npr.org/query?'
+    BASE_URL = 'https://api.npr.org/query?'
     DEFAULT_STORY_COUNT = 10
 
     def self.test_api_key api_key
@@ -26,7 +26,11 @@ class Podcast
                                                :apiKey => api_key
 
             request_url = "#{BASE_URL}#{request_args}"
-            response = Net::HTTP.get_response(URI.parse(request_url))
+            uri = URI.parse(request_url)
+            http = Net::HTTP.new(uri.host, uri.port)
+            http.use_ssl = true
+            http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+            response = http.get(uri.request_uri)
             json = JSON.parse response.body, :object_class => SafetyHash
 
             return JSON.generate({ :validKey => json.key?('list') })
@@ -65,8 +69,11 @@ class Podcast
                                            :apiKey => @api_key
 
         request_url = "#{BASE_URL}#{request_args}"
-
-        response = Net::HTTP.get_response(URI.parse(request_url))
+        uri = URI.parse(request_url)
+        http = Net::HTTP.new(uri.host, uri.port)
+        http.use_ssl = true
+        http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+        response = http.get(uri.request_uri)
         return JSON.parse response.body, :object_class => SafetyHash
     end
 

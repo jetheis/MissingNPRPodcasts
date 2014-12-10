@@ -29,6 +29,7 @@ assets {
 
 get '/' do
     @base_url = request.base_url
+    @scheme = request.scheme
     haml :index
 end
 
@@ -37,6 +38,24 @@ get '/testapikey' do
 
     content_type 'text/json'
     Podcast.test_api_key api_key
+end
+
+get '/podcasts/weekendsaturday' do
+    podcast = Podcast.new :program_id => 7,
+                          :api_key => params[:key],
+                          :story_count => STORY_COUNT
+
+    content_type 'text/xml'
+    podcast.build_rss
+end
+
+get '/podcasts/weekendsunday' do
+    podcast = Podcast.new :program_id => 10,
+                          :api_key => params[:key],
+                          :story_count => STORY_COUNT
+
+    content_type 'text/xml'
+    podcast.build_rss
 end
 
 get '/podcasts/morningedition' do
