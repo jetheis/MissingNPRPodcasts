@@ -108,10 +108,12 @@ class Podcast
         # Check to see if this is an audio story before making an item for it
         audio_url = nil
         story_json['audio'].each do |audio|
-            audio['format']['mp3'].each do |mp3|
-                if mp3['type'] == 'mp3'
-                    audio_url = mp3['$text']
-                    break
+            unless audio['format']['mp3'].empty?
+                audio['format']['mp3'].each do |mp3|
+                    if mp3['type'] == 'mp3'
+                        audio_url = mp3['$text']
+                        break
+                    end
                 end
             end
             break unless audio_url.nil?
