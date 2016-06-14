@@ -106,9 +106,17 @@ class Podcast
 
     def _populate_rss_story channel, story_json
         # Check to see if this is an audio story before making an item for it
-        begin
-            m3u_url = story_json['audio'][0]['format']['mp3'][0]['$text']
-        rescue
+        audio_url = nil
+        story_json['audio'].each do |audio|
+            audio['format']['mp3'].each do |mp3|
+                if mp3['type'] == 'mp3'
+                    audio_url = mp3['$text']
+                    break
+                end
+            end
+            break unless audio_url.nil?
+        end
+        if audio_url.nil?
             return # Bail if there's no audio
         end
 
@@ -118,14 +126,6 @@ class Podcast
 
         # Skip if there isn't a link for this story
         return if story_url.empty?
-
-        # Go find the actual audio URL (separate web request)
-        begin
-            m3u_content = Net::HTTP.get_response(URI.parse(m3u_url)).body
-            audio_url = m3u_content.split(/\s/)[0]
-        rescue
-            return # Bail if there's an error
-        end
 
         channel.item do |story|
             story.title story_json['title']['$text']
