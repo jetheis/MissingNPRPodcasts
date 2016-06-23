@@ -40,7 +40,7 @@ class Podcast
         @program_id = args[:program_id] or 2
         @api_key = args[:api_key]
         @story_count = args[:story_count] or DEFAULT_STORY_COUNT
-        @copyright = args[:copyright] or 'Copyright 2012 NPR - For Personal Use Only' 
+        @copyright = "Copyright #{Date.today.year} NPR"
         @author = args[:author] or 'NPR: National Public Radio'
         @language = args[:language] or 'en'
     end
@@ -90,6 +90,9 @@ class Podcast
         channel.language @language
         channel.copyright @copyright
 
+        # NEW! Add image and ... podcast metadata
+        channel.itunes :image, 'href="http://dudesbros.com/custom_npr_logo.png"/'
+
         # iTunes-specific metadata
         channel.itunes :subtitle, program_property('miniTeaser')
         channel.itunes :author, @author
@@ -107,7 +110,9 @@ class Podcast
     def _populate_rss_story channel, story_json
         # Check to see if this is an audio story before making an item for it
         begin
-            m3u_url = story_json['audio'][0]['format']['mp3'][0]['$text']
+            # NEW! m3u_url = story_json['audio'][0]['format']['mp3'][0]['$text']
+            # NEW! replacing the above mp3 playlist url with the below mp4 (m4a / AAC) url for better quality and file-size
+            audio_url = story_json['audio'][0]['format']['mp4'][0]['$text']
         rescue
             return # Bail if there's no audio
         end
@@ -119,26 +124,36 @@ class Podcast
         # Skip if there isn't a link for this story
         return if story_url.empty?
 
+        # NEW! Adding the short URL so we can use it somewhere to make sharing easier
+        short_url = ''
+        story_json['link'].each { |link_json| short_url = link_json['$text'] if link_json['type'] == 'short' }
+
+        # NEW! This block is no longer necessary when using the mp4 url
         # Go find the actual audio URL (separate web request)
-        begin
-            m3u_content = Net::HTTP.get_response(URI.parse(m3u_url)).body
-            audio_url = m3u_content.split(/\s/)[0]
-        rescue
-            return # Bail if there's an error
-        end
+        # begin
+        #     m3u_content = Net::HTTP.get_response(URI.parse(m3u_url)).body
+        #     audio_url = m3u_content.split(/\s/)[0]
+        # rescue
+        #     return # Bail if there's an error
+        # end
+
+        # NEW! adding individual images for episodes...so excited!
+        image_url = story_json['image'][0]['enlargement']['src']
 
         channel.item do |story|
             story.title story_json['title']['$text']
-            story.description story_json['miniTeaser']['$text'].gsub(%r{</?[^>]+?>}, '')
             story.link story_url
             story.guid story_url
             story.itunes :subtitle, story_json['miniTeaser']['$text'].gsub(%r{</?[^>]+?>}, '')
             story.itunes :summary, story_json['teaser']['$text'].gsub(%r{</?[^>]+?>}, '')
             story.itunes :explicit, 'no' # assumed
-            story.enclosure :url => audio_url, :type => 'audio/mpeg'
             story.itunes :duration, story_json['audio'][0]['duration']['$text']
             story.pubDate story_json['pubDate']['$text']
             story.itunes :keywords
+
+            #NEW!
+            story.enclosure :url => audio_url, :type => 'audio/m4a' # changed from mp3 to m4a (aka mp4 aka HE-AAC)
+            story.itunes :image => image_url
 
             # Construct author list before writing it (if there are authors)
             if story_json.has_key? 'byline'
