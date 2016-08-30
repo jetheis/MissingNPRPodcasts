@@ -16,7 +16,7 @@ class Podcast
     BASE_URL = 'https://api.npr.org/query?'
     DEFAULT_STORY_COUNT = 10
 
-    def self.test_api_key api_key
+    def self.test_api_key api_key, logger
             request_args = URI.encode_www_form :id => 1,
                                                :fields => 'all',
                                                :dataType => 'story',
