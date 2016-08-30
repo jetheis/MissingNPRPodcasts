@@ -34,7 +34,9 @@
         weekendSaturdayRssButton = $('#weekendSaturdayRssButton');
 
     function attachGoogleAnalyticsEvents() {
-        function clickHandler(button) { return function() { _gaq.push(['_trackEvent', button, 'click']); }; }
+        function clickHandler(button) { return function() {
+            ga('send', 'event', button, 'click');
+        }; }
         morningEditionITunesButton.click(clickHandler('Morning Edition iTunes Button'));
         morningEditionRssButton.click(clickHandler('Morning Edition RSS Button'));
         allThingsConsideredITunesButton.click(clickHandler('All Things Considered iTunes Button'));
@@ -42,12 +44,14 @@
         weekendSundayITunesButton.click(clickHandler('All Things Considered iTunes Button'));
         weekendSaturdayRssButton.click(clickHandler('All Things Considered RSS Button'));
 
-        apiKeyCheckButton.click(function() { _gaq.push(['_trackEvent', 'Validate API Key Button', 'click']); });
+        apiKeyCheckButton.click(function() {
+            ga('send', 'event', 'Validate API Key Button', 'click');
+        });
     }
 
     function attemptToRestoreKey() {
         if (storage && storage[storageKey]) {
-            _gaq.push(['_trackEvent', 'API Key', 'Restored']);
+            ga('send', 'event', 'API Key', 'Restored');
             apiKeyField.val(storage[storageKey]);
             apiKeyCheckButton.click();
         }
@@ -84,10 +88,9 @@
 
             if (data.hasOwnProperty('validKey') && data.validKey === true) {
 
-                _gaq.push(['_trackEvent', 'API Key', 'Validated']);
+                ga('send', 'event', 'API Key', 'Validated');
 
                 var binder = function(name, iTunesButton, rssButton) {
-
                     var commonUrl = baseUrl + 'podcasts/' + name + '?key=' + apiKey,
                         iTunesUrl = iTunesProtocol + commonUrl,
                         rssUrl = baseProtocol + commonUrl;
@@ -95,7 +98,7 @@
                     // Apply the new URLs
                     iTunesButton.attr('href', iTunesUrl);
                     rssButton.attr('href', rssUrl);
-                }
+                };
 
                 binder('morningedition', morningEditionITunesButton, morningEditionRssButton);
                 binder('allthingsconsidered', allThingsConsideredITunesButton, allThingsConsideredRssButton);
@@ -117,7 +120,7 @@
 
             } else {
 
-                _gaq.push(['_trackEvent', 'API Key', 'Failed to Validate']);
+                ga('send', 'event', 'API Key', 'Failed to Validate');
 
                 window.alert('The API key you entered does not appear to be valid. Please double check it and try again.');
                 enableValidateButton();
