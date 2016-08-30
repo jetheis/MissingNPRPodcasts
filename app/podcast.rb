@@ -3,7 +3,6 @@ require 'net/http'
 require 'builder'
 require 'json'
 
-
 class SafetyHash < Hash
     def [](y)
         result = super
@@ -43,6 +42,7 @@ class Podcast
         @copyright = args[:copyright] or 'Copyright 2012 NPR - For Personal Use Only' 
         @author = args[:author] or 'NPR: National Public Radio'
         @language = args[:language] or 'en'
+        @logger = args[:logger]
     end
 
     def build_rss
@@ -78,7 +78,6 @@ class Podcast
     end
 
     def _populate_rss_channel channel
-
         def program_property(prop)
             return @program_json[prop]['$text']
         end
@@ -105,21 +104,49 @@ class Podcast
     end
 
     def _populate_rss_story channel, story_json
-        # Check to see if this is an audio story before making an item for it
         audio_url = nil
-        story_json['audio'].each do |audio|
-            unless audio['format']['mp3'].empty?
-                audio['format']['mp3'].each do |mp3|
-                    if mp3['type'] == 'mp3'
-                        audio_url = mp3['$text']
-                        break
-                    end
-                end
-            end
-            break unless audio_url.nil?
+
+        # Find the first audio entry that has a non empty mp3 array
+        usable_audio_entry = story_json['audio'].detect do |audio|
+            !audio['format']['mp3'].nil? or !audio['format']['mp3'].empty?
         end
+
+        if usable_audio_entry.nil?
+            # Skip because there's no usable audio data for this story
+            @logger.warn("Skipping story because no usable audio entry found: #{story_json['id']}")
+            return
+        end
+
+        usable_audio_resource = usable_audio_entry['format']['mp3'].detect do |resource|
+            resource['type'] == 'mp3' or resource['type'] == 'm3u'
+        end
+
+        if usable_audio_resource.nil?
+            # Skip because there's no usable audio data for this story
+            @logger.warn("Skipping story because no usable audio resource found: #{story_json['id']}")
+            return
+        end
+
+        if usable_audio_resource['type'] == 'mp3'
+            audio_url = usable_audio_resource['$text']
+            @logger.info("Found MP3 direct URL: #{audio_url}")
+        elsif usable_audio_resource['type'] == 'm3u'
+            begin
+                m3u_url = usable_audio_resource['$text']
+                @logger.info("Converting M3U resource to MP3: #{m3u_url}")
+                m3u_content = Net::HTTP.get_response(URI.parse(m3u_url)).body
+                audio_url = m3u_content.split(/\s/)[0]
+                @logger.info("M3U successfully converted to MP3 URL: #{m3u_url} => #{audio_url}")
+            rescue StandardError => err
+                @logger.error("Error while trying to convert M3U resource to MP3: #{err}")
+            end
+        else
+            @logger.error("Bad type for audio resource: #{usable_audio_resource['type']}")
+        end
+
         if audio_url.nil?
-            return # Bail if there's no audio
+            @logger.warn("Skipping story, because no audio URL could be determined: #{story_json['id']}")
+            return
         end
 
         # Find appropriate story URL
