@@ -37,13 +37,14 @@ get '/testapikey' do
     api_key = params[:key]
 
     content_type 'text/json'
-    Podcast.test_api_key api_key
+    Podcast.test_api_key api_key, logger
 end
 
 get '/podcasts/weekendsaturday' do
     podcast = Podcast.new :program_id => 7,
                           :api_key => params[:key],
-                          :story_count => STORY_COUNT
+                          :story_count => STORY_COUNT,
+                          :logger => logger
 
     content_type 'text/xml'
     podcast.build_rss
@@ -52,7 +53,8 @@ end
 get '/podcasts/weekendsunday' do
     podcast = Podcast.new :program_id => 10,
                           :api_key => params[:key],
-                          :story_count => STORY_COUNT
+                          :story_count => STORY_COUNT,
+                          :logger => logger
 
     content_type 'text/xml'
     podcast.build_rss
@@ -61,7 +63,8 @@ end
 get '/podcasts/morningedition' do
     podcast = Podcast.new :program_id => 3,
                           :api_key => params[:key],
-                          :story_count => STORY_COUNT
+                          :story_count => STORY_COUNT,
+                          :logger => logger
 
     content_type 'text/xml'
     podcast.build_rss
@@ -70,7 +73,8 @@ end
 get '/podcasts/allthingsconsidered' do
     podcast = Podcast.new :program_id => 2,
                           :api_key => params[:key],
-                          :story_count => STORY_COUNT
+                          :story_count => STORY_COUNT,
+                          :logger => logger
 
     content_type 'text/xml'
     podcast.build_rss
